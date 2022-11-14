@@ -1,9 +1,8 @@
 import pytest
-import os
 import json
 from pathlib import Path
 
-from project.app import app, db, login_required
+from project.app import app, db
 
 TEST_DB = "test.db"
 
@@ -75,14 +74,10 @@ def test_messages(client):
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
 
+
 def test_search(client):
     """Ensure the user can search for posts"""
-    # search for previous post
-    rv = client.get(
-        "/search/",
-        data=dict(query="allowed"),
-        follow_redirects=True
-    )
+    rv = client.get("/search/", data=dict(query="allowed"), follow_redirects=True)
     assert rv.status_code == 200
 
 
