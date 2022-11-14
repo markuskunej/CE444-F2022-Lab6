@@ -75,6 +75,16 @@ def test_messages(client):
     assert b"&lt;Hello&gt;" in rv.data
     assert b"<strong>HTML</strong> allowed here" in rv.data
 
+def test_search(client):
+    """Ensure the user can search for posts"""
+    # search for previous post
+    rv = client.get(
+        "/search/",
+        data=dict(query="allowed"),
+        follow_redirects=True
+    )
+    assert rv.status_code == 200
+
 def test_delete_message(client):
     """Ensure the messages are being deleted"""
     rv = client.get('/delete/1')
